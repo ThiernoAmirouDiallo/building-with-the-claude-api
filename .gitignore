@@ -1,0 +1,28 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Virtual environments
+.venv/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# JetBrains IDE
+.idea/
+
+# VS Code
+.vscode/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
