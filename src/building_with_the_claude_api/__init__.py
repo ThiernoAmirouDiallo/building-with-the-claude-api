@@ -24,7 +24,7 @@ def chat(messages, client, system_prompt=None, effort=Effort.HIGH):
         "max_tokens": 1024,
         "messages": messages,
         "output_config": {"effort": effort.value},
-    };
+    }
 
     if system_prompt is not None:
         request["system"] = system_prompt
