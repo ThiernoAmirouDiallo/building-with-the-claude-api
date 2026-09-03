@@ -18,7 +18,7 @@ def add_assistant_message(messages, text):
     assistant_message = {"role": "assistant", "content": text}
     messages.append(assistant_message)
 
-def chat(messages, client, system_prompt=None, effort=Effort.HIGH):
+def chat(messages, client, system_prompt=None, effort=Effort.LOW, stop_sequences=None, json_schema=None):
     request = {
         "model": "claude-sonnet-5",
         "max_tokens": 1024,
@@ -26,8 +26,14 @@ def chat(messages, client, system_prompt=None, effort=Effort.HIGH):
         "output_config": {"effort": effort.value},
     }
 
+    if json_schema is not None:
+        request["output_config"]["format"] = {"type": "json_schema", "schema": json_schema}
+
     if system_prompt is not None:
         request["system"] = system_prompt
+
+    if stop_sequences is not None:
+        request["stop_sequences"] = stop_sequences
 
     message = client.messages.create(**request)
 
