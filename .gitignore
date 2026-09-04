@@ -26,3 +26,7 @@ wheels/
 # OS-generated files
 .DS_Store
 Thumbs.db
+
+# Scratch/temp files
+tmp/*
+!tmp/.gitkeep
