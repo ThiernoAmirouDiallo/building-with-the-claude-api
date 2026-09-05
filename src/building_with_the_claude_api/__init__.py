@@ -9,6 +9,7 @@ class Effort(str, Enum):
     HIGH = "high"
     XHIGH = "xhigh"
     MAX = "max"
+    NONE = "none"
 
 def add_user_message(messages, text):
     user_message = {"role": "user", "content": text}
@@ -18,13 +19,16 @@ def add_assistant_message(messages, text):
     assistant_message = {"role": "assistant", "content": text}
     messages.append(assistant_message)
 
-def chat(messages, client, system_prompt=None, effort=Effort.LOW, stop_sequences=None, json_schema=None):
+def chat(messages, client, system_prompt=None, effort=Effort.LOW, stop_sequences=None, json_schema=None, model="claude-sonnet-5"):
     request = {
-        "model": "claude-sonnet-5",
+        "model": model,
         "max_tokens": 1024,
         "messages": messages,
-        "output_config": {"effort": effort.value},
+        "output_config": {},
     }
+
+    if effort not in (None, Effort.NONE):
+        request["output_config"]["effort"] = effort.value
 
     if json_schema is not None:
         request["output_config"]["format"] = {"type": "json_schema", "schema": json_schema}
@@ -58,4 +62,4 @@ def main() -> None:
     response = chat(messages=messages, client=client, system_prompt=system_prompt, effort=Effort.LOW)
     add_assistant_message(messages=messages, text=response)
     print(response)
-    
+
