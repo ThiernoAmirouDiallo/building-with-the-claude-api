@@ -16,7 +16,7 @@ class ToolManager:
                 {
                     "name": t.name,
                     "description": t.description,
-                    "input_schema": t.inputSchema,
+                    "input_schema": t.input_schema,
                 }
                 for t in tool_models
             ]
@@ -89,7 +89,7 @@ class ToolManager:
                     tool_use_id,
                     content_json,
                     "error"
-                    if tool_output and tool_output.isError
+                    if tool_output and tool_output.is_error
                     else "success",
                 )
             except Exception as e:
@@ -99,7 +99,7 @@ class ToolManager:
                     tool_use_id,
                     json.dumps({"error": error_message}),
                     "error"
-                    if tool_output and tool_output.isError
+                    if tool_output and tool_output.is_error
                     else "success",
                 )
 

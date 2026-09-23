@@ -1,5 +1,16 @@
+from enum import Enum
+
 from anthropic import Anthropic
 from anthropic.types import Message
+
+
+class Effort(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    XHIGH = "xhigh"
+    MAX = "max"
+    NONE = "none"
 
 
 class Claude:
@@ -34,6 +45,7 @@ class Claude:
         self,
         messages,
         system=None,
+        effort=Effort.NONE,
         stop_sequences=[],
         tools=None,
         thinking=False,
@@ -45,6 +57,9 @@ class Claude:
             "messages": messages,
             "stop_sequences": stop_sequences,
         }
+
+        if effort not in (None, Effort.NONE):
+            params["output_config"] = {"effort": effort.value}
 
         if thinking:
             params["thinking"] = {
@@ -58,5 +73,4 @@ class Claude:
         if system:
             params["system"] = system
 
-        message = self.client.messages.create(**params)
-        return message
+        return self.client.messages.create(**params)
