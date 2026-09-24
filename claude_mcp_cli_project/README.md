@@ -103,8 +103,14 @@ Edit the `mcp_server.py` file to add new documents to the `docs` dictionary.
 
 To fully implement the MCP features:
 
-1. Complete the TODOs in `mcp_server.py`
-2. Implement the missing functionality in `mcp_client.py`
+1. Server defined in `mcp_server.py`
+2. Client functionality implemented in `mcp_client.py`
+### MCP inspector 
+The MCP inspector requires node. Install it with `brew install node`
+
+Run `mcp dev mcp_server.py`. This will provide the url of the local browser based MCP debugger.
+
+This MCP cli comes from the python dependency on the project.
 
 ### Linting and Typing Check
 
