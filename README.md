@@ -20,11 +20,16 @@ This project uses [uv](https://docs.astral.sh/uv/) for dependency management and
 uv sync
 ```
 
-Create a `.env` file in the project root with your Anthropic API key:
+Create a `.env` file in the project root with your API keys:
 
 ```
 ANTHROPIC_API_KEY=your-api-key-here
+VOYAGE_API_KEY=your-voyage-api-key-here
 ```
+
+### Embeddings (RAG)
+
+Claude doesn't offer its own embeddings model, so the RAG notebooks use [Voyage AI](https://www.voyageai.com/) to generate embeddings. `VOYAGE_API_KEY` is only needed for those notebooks.
 
 ## Structure
 
