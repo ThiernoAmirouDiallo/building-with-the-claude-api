@@ -30,3 +30,6 @@ Thumbs.db
 # Scratch/temp files
 **/tmp/**
 !tmp/.gitkeep
+
+# Git worktrees created by /new-worktree
+.worktrees/

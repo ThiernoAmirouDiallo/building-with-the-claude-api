@@ -29,3 +29,7 @@ Stuff I've had to correct more than once, so writing it down.
 
 - **Actually run the thing before saying it's fixed.** Diff-reading isn't
   verification.
+
+- **Parallel work goes in a worktree.** Use `/new-worktree` (or the skill of
+  the same name) to get `feature/<name>` checked out under
+  `.worktrees/`. It's the same no-commit-unless-asked rule in there.
