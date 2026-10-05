@@ -112,6 +112,49 @@ Run `mcp dev mcp_server.py`. This will provide the url of the local browser base
 
 This MCP cli comes from the python dependency on the project.
 
+### Using the server from Claude Code
+
+`mcp_server.py` is a standard MCP server over stdio, so Claude Code (CLI or the desktop app's Code tab) can use its tools (`read_doc_contents`, `edit_document`), resources and prompts directly.
+
+Register the **server** (`mcp_server.py`), not `main.py`. `main.py` is the interactive chat client, which needs a terminal and starts the server itself, so registering it fails with `CONNECTION_CLOSED`.
+
+From this project's directory:
+
+```bash
+claude mcp add documents -- uv run --directory "$(pwd)" mcp_server.py
+```
+
+`--directory` makes the command work no matter which folder Claude Code is started from.
+
+Check it connected:
+
+```bash
+claude mcp list
+```
+
+Start a new Claude Code session afterwards, since servers are loaded when a session starts. Inside a session, `/mcp` shows the status.
+
+By default the server is added with local scope (private to you, for the current project). Add `-s project` to write it to a shared `.mcp.json` in the repo, or `-s user` to make it available in every project. To remove it:
+
+```bash
+claude mcp remove documents
+```
+
+The Claude Desktop chat app uses a separate config, `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "documents": {
+      "command": "uv",
+      "args": ["run", "--directory", "/absolute/path/to/claude_mcp_cli_project", "mcp_server.py"]
+    }
+  }
+}
+```
+
+Restart the app after editing it. Use the full path to `uv` in `command` if the app can't find it.
+
 ### Linting and Typing Check
 
 There are no lint or type checks implemented.
