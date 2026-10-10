@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/list-edited-files.sh",
+            "timeout": 10,
+            "statusMessage": "Listing files edited this session..."
+          }
+        ]
+      }
+    ]
+  }
+}
