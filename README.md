@@ -176,3 +176,44 @@ description: One sentence on what it does. Use when the user asks for X.
 ```
 
 A slash command is the simpler cousin: a single file `.claude/commands/<name>.md` with no folder. The filename becomes the command, `$ARGUMENTS` is whatever you type after it, and the frontmatter can set `description`, `argument-hint` and `allowed-tools` (the tools it may use without asking for permission). Use a command for a short fixed prompt and a skill when it needs supporting files or you want Claude to trigger it by itself. See [`.claude/commands/new-worktree.md`](.claude/commands/new-worktree.md).
+
+### Plugins
+
+A plugin is a bundle of skills, slash commands, agents, hooks and MCP servers that you install in one go instead of copying files by hand. Plugins come from a marketplace, which is just a git repo with a list of plugins. The official one (`claude-plugins-official`) is already known on this machine, so you only need to add a marketplace when you want a third-party one.
+
+```bash
+claude plugin marketplace list                 # marketplaces I can install from
+claude plugin marketplace add <github-user/repo>   # add another one (also takes a URL or a path)
+claude plugin marketplace update               # refresh the plugin lists
+```
+
+Installing, checking and removing:
+
+```bash
+claude plugin install commit-commands          # add it for me, in every project (default scope: user)
+claude plugin install commit-commands --scope project   # or only for this repo, shared through .claude/settings.json
+claude plugin list                             # what's installed
+claude plugin details commit-commands          # what it contains and roughly what it costs in tokens
+claude plugin disable commit-commands          # turn it off without removing it
+claude plugin enable commit-commands
+```
+
+Plugins load when a session starts, so start a new session after installing one. If two marketplaces have a plugin with the same name, use `plugin@marketplace`, for example `commit-commands@claude-plugins-official`.
+
+Plugin commands are namespaced with the plugin name, so there's no clash with my own commands: `/commit-commands:commit`. When the name is unique, `/commit` also works.
+
+**Example: `commit-commands`**
+
+It's a small official plugin with three slash commands, each one a Markdown file like the ones in `.claude/commands/`:
+
+| Command | What it does |
+| --- | --- |
+| `/commit` | Looks at the status and diff, matches the style of recent commits, stages and makes one commit |
+| `/commit-push-pr` | Does the same, then pushes a branch and opens a pull request |
+| `/clean_gone` | Deletes local branches whose remote branch is gone |
+
+These only run when I type them, so the "never commit unless I ask" rule still holds. `/commit-push-pr` also pushes, so I only run it when I actually want that.
+
+Other plugins in the official marketplace worth a look: `code-review`, `feature-dev`, `skill-creator`, `plugin-dev` and `pyright-lsp` (Python type checking). Browse them with `ls ~/.claude/plugins/marketplaces/claude-plugins-official/plugins`.
+
+The desktop app also has its own plugin catalog tied to the claude.ai account (this session has a data-analysis plugin from there). That one is managed in the app's connector and plugin settings, not with these commands.
