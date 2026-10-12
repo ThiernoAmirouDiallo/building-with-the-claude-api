@@ -103,6 +103,10 @@ Things to know:
 - Notebooks keep working, since their relative paths (`./csv`, `./mds`, `./tmp`) resolve inside the worktree's own copy of the repo.
 - The script never commits or pushes.
 
+### Automating reviews and PR work
+
+For `/code-review`, managed Code Review through the Claude GitHub app, and the Claude Code GitHub Action (the `@claude` trigger and automated runs), see [AUTOMATING.md](AUTOMATING.md).
+
 ### Subagents
 
 A subagent is a helper that Claude hands a task to. It runs in its own fresh context window, does the work, and sends back one summary, so a long review or search doesn't fill up the main conversation. It's one Markdown file: the frontmatter configures it and the body is its system prompt.
